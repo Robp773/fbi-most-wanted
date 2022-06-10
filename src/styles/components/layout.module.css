@@ -1,0 +1,18 @@
+
+nav {
+  padding: 10px initial;
+}
+
+footer {
+  padding: 20px;
+  background-color: $black;
+}
+
+.app {
+  /* background: gray; */
+}
+
+.main {
+  min-height: 85vh;
+  padding: 20px;
+}

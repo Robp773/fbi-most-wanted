@@ -1,122 +1,149 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
-
+import {
+  Button,
+  Card,
+  Elevation,
+  Icon,
+  IconSize,
+  InputGroup,
+  NonIdealState,
+  Popover2,
+  Position,
+  Tooltip,
+} from "@blueprintjs/core"
+import slugify from "@sindresorhus/slugify"
+import { graphql } from "gatsby"
+import debounce from "lodash.debounce"
+import React, { useState } from "react"
+import { useFlexSearch } from "react-use-flexsearch"
+import FugitiveTag from "../components/FugitiveTag"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import * as styles from "../components/index.module.css"
+import "../styles/pages/index.module.css"
+import * as styles from "../styles/pages/index.module.css"
 
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-  },
-  {
-    text: "Examples",
-    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
-    description:
-      "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-  },
-]
+const IndexPage = data => {
+  const { localSearchFugitives } = data.data
 
-const samplePageLinks = [
-  {
-    text: "Page 2",
-    url: "page-2",
-    badge: false,
-    description:
-      "A simple example of linking to another page within a Gatsby site",
-  },
-  { text: "TypeScript", url: "using-typescript" },
-  { text: "Server Side Rendering", url: "using-ssr" },
-  { text: "Deferred Static Generation", url: "using-dsg" },
-]
+  const [query, setQuery] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-const moreLinks = [
-  { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
-  {
-    text: "Documentation",
-    url: "https://gatsbyjs.com/docs/",
-  },
-  {
-    text: "Starters",
-    url: "https://gatsbyjs.com/starters/",
-  },
-  {
-    text: "Showcase",
-    url: "https://gatsbyjs.com/showcase/",
-  },
-  {
-    text: "Contributing",
-    url: "https://www.gatsbyjs.com/contributing/",
-  },
-  { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
-]
+  const results = useFlexSearch(
+    query,
+    localSearchFugitives.index,
+    localSearchFugitives.store
+  )
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
-
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Home" />
-    <div className={styles.textCenter}>
-      <StaticImage
-        src="../images/example.png"
-        loading="eager"
-        width={64}
-        quality={95}
-        formats={["auto", "webp", "avif"]}
-        alt=""
-        style={{ marginBottom: `var(--space-3)` }}
+  console.log(results)
+  return (
+    <Layout>
+      <Seo title="Most Wanted List" />
+      <InputGroup
+        onChange={debounce(e => {
+          setQuery(e.target.value)
+        }, 250)}
+        className={styles.fugitiveSearch}
+        type="search"
+        fill={false}
+        large
+        placeholder="Search"
       />
-      <h1>
-        Welcome to <b>Gatsby!</b>
-      </h1>
-      <p className={styles.intro}>
-        <b>Example pages:</b>{" "}
-        {samplePageLinks.map((link, i) => (
-          <React.Fragment key={link.url}>
-            <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> · </>}
-          </React.Fragment>
-        ))}
-        <br />
-        Edit <code>src/pages/index.js</code> to update this page.
-      </p>
-    </div>
-    <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
-        </li>
-      ))}
-    </ul>
-    {moreLinks.map((link, i) => (
-      <React.Fragment key={link.url}>
-        <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> · </>}
-      </React.Fragment>
-    ))}
-  </Layout>
-)
+
+      <div className={styles.nonIdealWrapper}>
+        {!query && (
+          <NonIdealState
+            icon="search"
+            title="Enter your search terms"
+            description="Example: 'asian brown eyes kevin' will return results for people with asian race, brown eyes, and Kevin in their name."
+          />
+        )}
+
+        {results.length === 0 && query && (
+          <NonIdealState
+            icon="warning-sign"
+            title="No results found"
+            description="Try tweaking your search query and double check spelling."
+          />
+        )}
+      </div>
+
+      <div className={styles.fugitiveGrid}>
+        {results.map((result, index) => {
+          return (
+            <Card
+              className={styles.fugitiveCard}
+              key={index}
+              elevation={Elevation.TWO}
+            >
+              <img
+                alt={result.title}
+                className={styles.fugitiveImg}
+                src={result.images[0].thumb}
+              />
+              <h5 className="bp4-heading">
+                {result.title}{" "}
+                {result.warning_message && (
+                  <Tooltip
+                    intent="danger"
+                    content={result.warning_message}
+                    position={Position.RIGHT}
+                  >
+                    <Icon
+                      // color="red"
+                      icon="warning-sign"
+                      size={IconSize.LARGE}
+                      intent="danger"
+                    />
+                  </Tooltip>
+                )}
+              </h5>
+              <div className={styles.fugitiveAliases}>
+                {result.aliases &&
+                  result.aliases.split(";").map((alias, index) => {
+                    return <FugitiveTag minimal key={index} text={alias} />
+                  })}
+              </div>
+              <div className={styles.fugitiveTagWrapper}>
+                {result.sex && <FugitiveTag text={result.sex} />}
+                {result.race && <FugitiveTag text={result.race} />}
+                {result.eyes && <FugitiveTag text={result.eyes} />}
+                {result.hair && <FugitiveTag text={result.hair} />}
+                {result.weight && <FugitiveTag text={result.weight} />}
+                {result.height && <FugitiveTag text={result.height} />}
+                {result.nationality && (
+                  <FugitiveTag text={result.nationality} />
+                )}
+              </div>
+              <ul className={`${styles.descList} bp4-list bp4-list-unstyled`}>
+                {result.description
+                  ? result.description.split(";").map((item, index) => {
+                      return <li key={index}>{item}</li>
+                    })
+                  : "No description available"}
+              </ul>
+              <div className={styles.fugitiveLink}>
+                {" "}
+                <a href={`/${slugify(result.title)}`}>
+                  <Button intent="primary" className={styles.detailsBtn}>
+                    Details
+                  </Button>
+                </a>
+              </div>
+            </Card>
+          )
+        })}
+      </div>
+    </Layout>
+  )
+}
+export const query = graphql`
+  query {
+    localSearchFugitives {
+      id
+      name
+      store
+      index
+    }
+  }
+`
 
 export default IndexPage

@@ -1,56 +1,28 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
 import * as React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import "../styles/components/layout.module.css"
+// import { Button, Spinner } from "@blueprintjs/core"
+import * as styles from "../styles/components/layout.module.css"
 
-import Header from "./header"
-import "./layout.css"
 
 const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: `var(--size-content)`,
-          padding: `var(--size-gutter)`,
-        }}
-      >
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `var(--space-5)`,
-            fontSize: `var(--font-sm)`,
-          }}
-        >
-          © {new Date().getFullYear()} &middot; Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <div className={`${styles.app}`}>
+      <nav className="bp4-navbar bp4-dark">
+        <h1 className="bp4-heading">FBI Most Wanted</h1>
+      </nav>
+      <main className={styles.main}>{children}</main>
+      <footer>
+        <div className="bp4-text-small bp4-text-muted">
+          This app was made as a personal side project and has no affiliation
+          with the FBI. All data originates from the{" "}
+          <a target="#" href="https://www.fbi.gov/wanted/api">
+            FBI Wanted API
+          </a>
+          .
+        </div>
+      </footer>
+    </div>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout
