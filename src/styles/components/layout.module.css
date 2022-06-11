@@ -1,18 +1,26 @@
 
 nav {
   padding: 10px initial;
-}
+  background: #383E47;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
 
 footer {
-  padding: 20px;
-  background-color: $black;
+  padding: 10px;
 }
 
 .app {
-  /* background: gray; */
 }
 
 .main {
   min-height: 85vh;
   padding: 20px;
 }
+
+
+.syncTooltip{
+  margin-left: 10px;
+}
+

@@ -1,6 +1,8 @@
 import {
   Button,
+  Callout,
   Card,
+  Divider,
   Elevation,
   Icon,
   IconSize,
@@ -25,7 +27,6 @@ const IndexPage = data => {
   const { localSearchFugitives } = data.data
 
   const [query, setQuery] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
 
   const results = useFlexSearch(
     query,
@@ -43,11 +44,17 @@ const IndexPage = data => {
         }, 250)}
         className={styles.fugitiveSearch}
         type="search"
-        fill={false}
         large
+        leftIcon="search"
+        intent="primary"
         placeholder="Search"
+        round={true}
       />
-
+      {/* {results.length > 0 && (
+        <Callout intent="success"  className={styles.resultCount}>
+          {results.length} results found
+        </Callout>
+      )} */}
       <div className={styles.nonIdealWrapper}>
         {!query && (
           <NonIdealState
@@ -80,15 +87,14 @@ const IndexPage = data => {
                 src={result.images[0].thumb}
               />
               <h5 className="bp4-heading">
-                {result.title}{" "}
+                {result.title}
                 {result.warning_message && (
                   <Tooltip
+                    className={styles.fugitiveTooltip}
                     intent="danger"
                     content={result.warning_message}
-                    position={Position.RIGHT}
                   >
                     <Icon
-                      // color="red"
                       icon="warning-sign"
                       size={IconSize.LARGE}
                       intent="danger"
@@ -121,7 +127,6 @@ const IndexPage = data => {
                   : "No description available"}
               </ul>
               <div className={styles.fugitiveLink}>
-                {" "}
                 <a href={`/${slugify(result.title)}`}>
                   <Button intent="primary" className={styles.detailsBtn}>
                     Details

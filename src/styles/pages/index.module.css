@@ -1,19 +1,21 @@
 .fugitiveSearch {
   width: 50%;
   margin: auto;
+  display: flex;
 }
 
 .fugitiveGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 5px;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .fugitiveCard {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: relative;
 }
 
 .fugitiveImg {
@@ -35,13 +37,24 @@
 }
 
 .descList {
-  margin-bottom: 20px;
-}
-
-.detailsBtn {
+  margin: 10px 0;
 }
 
 .fugitiveLink {
   color: #fff;
   margin-top: auto;
+}
+
+.fugitiveTooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.resultCount {
+  /* height: 100%; */
+  /* display: flex; */
+  width: 50%;
+  margin: auto;
 }
