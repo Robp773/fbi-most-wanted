@@ -1,12 +1,18 @@
-const capitalizeWords = str => {
+const capitalizeWords = (str, desc) => {
   if (!str) return null
   const words = str.split(" ")
 
-  return words
+  let newStr = words
     .map(word => {
       return (word = word[0].toUpperCase() + word.substring(1))
     })
     .join(" ")
+
+  if (desc) {
+   newStr = newStr.concat(` ${desc}`)
+  }
+  console.log(newStr, desc)
+  return newStr
 }
 
 const getNumberRanges = (min, max, unit) => {
@@ -26,6 +32,6 @@ const arrayToSemiColonStr = array => {
 module.exports = {
   capitalizeWords,
   getNumberRanges,
-//   semiColonsToArray,
+  //   semiColonsToArray,
   arrayToSemiColonStr,
 }

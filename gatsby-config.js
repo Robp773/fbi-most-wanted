@@ -155,6 +155,7 @@ module.exports = {
                 weight_min
                 weight_max
                 warning_message
+                subjects
                 images {
                   caption
                   large
@@ -186,7 +187,8 @@ module.exports = {
           "weight",
           "height",
           "description",
-          "occupations"
+          "occupations",
+          "subjects",
         ],
 
         // List of keys to store and make available in your UI. The values of
@@ -206,17 +208,16 @@ module.exports = {
           "weight",
           "height",
           "description",
-          "warning_message"
+          "warning_message",
+          "subjects",
         ],
-
+  
         // Function used to map the result from the GraphQL query. This should
         // return an array of items to index in the form of flat objects
         // containing properties to index. The objects must contain the `ref`
         // field above (default: 'id'). This is required.
         normalizer: ({ data }) => {
-          return data.allFugitive.edges.map(fugitive => {
-            console.log(fugitive)
-            const item = fugitive.node
+          return data.allFugitive.edges.map(({ node }) => {
             const {
               id,
               title,
@@ -232,8 +233,9 @@ module.exports = {
               height_min,
               weight_max,
               weight_min,
-              warning_message
-            } = item
+              warning_message,
+              subjects,
+            } = node
             return {
               id,
               title,
@@ -241,13 +243,14 @@ module.exports = {
               aliases: arrayToSemiColonStr(aliases),
               description,
               images,
-              eyes: `${capitalizeWords(eyes)} eyes`,
-              hair: `${capitalizeWords(hair)} hair`,
+              eyes: capitalizeWords(eyes, "eyes"),
+              hair: capitalizeWords(hair, "hair"),
               sex: capitalizeWords(sex),
               weight: getNumberRanges(weight_min, weight_max, "lbs"),
               height: getNumberRanges(height_min, height_max, "inches tall"),
               nationality,
-              warning_message
+              warning_message,
+              subjects,
             }
           })
         },

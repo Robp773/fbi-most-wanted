@@ -8565,7 +8565,7 @@ mkdirp@^0.5.1, mkdirp@^0.5.4, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-moment@^2.29.1:
+moment@^2.29.1, moment@^2.29.3:
   version "2.29.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
   integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
@@ -9950,6 +9950,11 @@ react-helmet@^6.1.0:
     prop-types "^15.7.2"
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
+
+react-image-gallery@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-1.2.8.tgz#8f41b0ade1c115a4f34621771c182af33d2d9a62"
+  integrity sha512-7KbWcWChUMHRGyJHA/eH3injWF9/2WTlQXjV6fym1DqwrINSVIh1hLiqmujh/XANstW+osqSu5WFKKPy2F2gbA==
 
 react-is@^16.13.1:
   version "16.13.1"

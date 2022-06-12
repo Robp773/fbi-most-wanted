@@ -4,14 +4,14 @@ import "../styles/components/layout.module.css"
 import * as styles from "../styles/components/layout.module.css"
 import { StaticQuery, graphql } from "gatsby"
 import { Callout, Icon, IconSize, Tooltip } from "@blueprintjs/core"
-
+import moment from "moment"
 const Layout = ({ children }) => {
   return (
     <StaticQuery
       query={graphql`
         query {
           site {
-            buildTime(fromNow: true)
+            buildTime
           }
         }
       `}
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
             <nav className="bp4-navbar bp4-dark">
               <h1 className="bp4-heading">FBI Most Wanted</h1>
               <div>
-                Last sync: {data.site.buildTime}
+                Last sync: {moment(data.site.buildTime).fromNow()}
                 <Tooltip
                   className={styles.syncTooltip}
                   intent="primary"

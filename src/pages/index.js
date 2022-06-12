@@ -1,15 +1,11 @@
 import {
   Button,
-  Callout,
   Card,
-  Divider,
   Elevation,
   Icon,
   IconSize,
   InputGroup,
   NonIdealState,
-  Popover2,
-  Position,
   Tooltip,
 } from "@blueprintjs/core"
 import slugify from "@sindresorhus/slugify"
@@ -22,6 +18,8 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import "../styles/pages/index.module.css"
 import * as styles from "../styles/pages/index.module.css"
+import { Link } from "gatsby";
+
 
 const IndexPage = data => {
   const { localSearchFugitives } = data.data
@@ -33,7 +31,6 @@ const IndexPage = data => {
     localSearchFugitives.index,
     localSearchFugitives.store
   )
-
   console.log(results)
   return (
     <Layout>
@@ -102,13 +99,17 @@ const IndexPage = data => {
                   </Tooltip>
                 )}
               </h5>
-              <div className={styles.fugitiveAliases}>
-                {result.aliases &&
-                  result.aliases.split(";").map((alias, index) => {
-                    return <FugitiveTag minimal key={index} text={alias} />
-                  })}
-              </div>
               <div className={styles.fugitiveTagWrapper}>
+                {result.subjects &&
+                  result.subjects.map((subject, index) => {
+                    return (
+                      <FugitiveTag
+                        intent="warning"
+                        key={index}
+                        text={subject}
+                      />
+                    )
+                  })}
                 {result.sex && <FugitiveTag text={result.sex} />}
                 {result.race && <FugitiveTag text={result.race} />}
                 {result.eyes && <FugitiveTag text={result.eyes} />}
@@ -118,6 +119,10 @@ const IndexPage = data => {
                 {result.nationality && (
                   <FugitiveTag text={result.nationality} />
                 )}
+                {result.aliases &&
+                  result.aliases.split(";").map((alias, index) => {
+                    return <FugitiveTag minimal key={index} text={alias} />
+                  })}
               </div>
               <ul className={`${styles.descList} bp4-list bp4-list-unstyled`}>
                 {result.description
@@ -127,11 +132,9 @@ const IndexPage = data => {
                   : "No description available"}
               </ul>
               <div className={styles.fugitiveLink}>
-                <a href={`/${slugify(result.title)}`}>
-                  <Button intent="primary" className={styles.detailsBtn}>
-                    Details
-                  </Button>
-                </a>
+                <Link to={`/${slugify(result.title)}`}>
+                  <Button icon="info-sign" intent="primary">Details</Button>
+                </Link>
               </div>
             </Card>
           )

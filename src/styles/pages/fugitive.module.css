@@ -1,0 +1,54 @@
+.fugitivePage {
+  background: #f6f7f9;
+}
+
+.fugitiveContent {
+  width: 90ch;
+  background: #ffffff;
+  min-height: 100vh;
+  margin: auto;
+  padding: 10px;
+}
+
+.fugitiveHeading {
+  display: flex;
+  height: 300px;
+  /* justify-content: center; */
+}
+
+.headingContent {
+  width: 60%;
+  /* margin: 0 auto; */
+}
+
+.headingGallery {
+  margin: auto;
+}
+
+.fugitiveInfo {
+}
+
+.fugitiveAdditionalInfo {
+}
+
+.title {
+  /* text-align: center; */
+}
+
+.reward,
+.warning {
+  margin-bottom: 5px;
+}
+
+.fugitiveSection {
+  margin-bottom: 10px;
+}
+
+.fugitiveSection > * p {
+  margin: 0;
+}
+
+.backLink {
+  position: relative;
+  right: 100px;
+}

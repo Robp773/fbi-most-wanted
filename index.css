@@ -1,7 +1,16 @@
 @import "~normalize.css";
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
-
+@import "~react-image-gallery/styles/css/image-gallery.css";
 ::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
+}
+
+.image-gallery-slides {
+  height: 300px !important
+}
+.image-gallery-slide,
+.image-gallery-image {
+  max-height: unset !important;
+  height: 100% !important;
 }
