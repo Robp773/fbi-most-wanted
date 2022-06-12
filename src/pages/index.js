@@ -18,8 +18,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import "../styles/pages/index.module.css"
 import * as styles from "../styles/pages/index.module.css"
-import { Link } from "gatsby";
-
+import { Link } from "gatsby"
 
 const IndexPage = data => {
   const { localSearchFugitives } = data.data
@@ -44,20 +43,15 @@ const IndexPage = data => {
         large
         leftIcon="search"
         intent="primary"
-        placeholder="Search"
+        placeholder="Example: 'cuban fraud benitez'"
         round={true}
       />
-      {/* {results.length > 0 && (
-        <Callout intent="success"  className={styles.resultCount}>
-          {results.length} results found
-        </Callout>
-      )} */}
       <div className={styles.nonIdealWrapper}>
         {!query && (
           <NonIdealState
             icon="search"
             title="Enter your search terms"
-            description="Example: 'asian brown eyes kevin' will return results for people with asian race, brown eyes, and Kevin in their name."
+            description="Search terms can refer to a fugitive's name or aliases, eye or hair color, gender, race, nationality, weight, height, alleged crimes, or occupations."
           />
         )}
 
@@ -133,7 +127,9 @@ const IndexPage = data => {
               </ul>
               <div className={styles.fugitiveLink}>
                 <Link to={`/${slugify(result.title)}`}>
-                  <Button icon="info-sign" intent="primary">Details</Button>
+                  <Button icon="info-sign" intent="primary">
+                    Details
+                  </Button>
                 </Link>
               </div>
             </Card>

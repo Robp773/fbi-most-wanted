@@ -33,7 +33,9 @@ const FugitivePage = ({ data: { fugitive } }) => {
       <div className={styles.fugitivePage}>
         <Seo title="Fugitive page" />
         <div className={styles.fugitiveContent}>
-          <Link className={styles.backLink} to="/"><Button>Back</Button></Link>
+          <Link className={styles.backLink} to="/">
+            <Button icon="arrow-left">Back</Button>
+          </Link>
           <div className={styles.fugitiveHeading}>
             <div className={styles.headingContent}>
               <h2 className={`${styles.title} bp4-heading`}>
@@ -101,6 +103,7 @@ const FugitivePage = ({ data: { fugitive } }) => {
                     ...image,
                     thumbnail: image.thumb,
                     loading: "lazy",
+                    originalAlt: image.caption,
                   }
                 })}
               />
@@ -119,8 +122,7 @@ const FugitivePage = ({ data: { fugitive } }) => {
             )}
             {fugitive.description && (
               <div className={styles.fugitiveSection}>
-                <h5 className="bp4-heading">                  {fugitive.details ? "Last Seen" : "Accused Crimes"}
-</h5>
+                <h5 className="bp4-heading">Description Info</h5>
                 <ul className={`${styles.descList} bp4-list bp4-list-unstyled`}>
                   {fugitive.description.split(";").map((item, index) => {
                     return <li key={index}>{item}</li>
@@ -151,11 +153,22 @@ const FugitivePage = ({ data: { fugitive } }) => {
             <div className={styles.fugitiveSection}>
               <h5 className="bp4-heading">Additional Info</h5>
               <div className="bp4-running-text">
+                {fugitive.url && (
+                  <div>
+                    <a target="#" href={fugitive.url}>
+                      FBI Link
+                    </a>
+                  </div>
+                )}
                 {fugitive.field_offices && (
                   <div>
                     Field Offices:{" "}
                     {fugitive.field_offices.map((office, index) => {
-                      return <span key={index}>{office}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {capitalizeWords(office)}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -164,7 +177,11 @@ const FugitivePage = ({ data: { fugitive } }) => {
                   <div>
                     Languages:{" "}
                     {fugitive.languages.map((language, index) => {
-                      return <span key={index}>{language}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {language}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -173,7 +190,11 @@ const FugitivePage = ({ data: { fugitive } }) => {
                   <div>
                     Locations:{" "}
                     {fugitive.locations.map((location, index) => {
-                      return <span key={index}>{location}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {location}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -182,7 +203,11 @@ const FugitivePage = ({ data: { fugitive } }) => {
                   <div>
                     Occupations:{" "}
                     {fugitive.occupations.map((occupation, index) => {
-                      return <span key={index}>{occupation}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {occupation}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -191,7 +216,11 @@ const FugitivePage = ({ data: { fugitive } }) => {
                   <div>
                     Possible Countries:{" "}
                     {fugitive.possible_countries.map((country, index) => {
-                      return <span key={index}>{country}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {country}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -200,7 +229,11 @@ const FugitivePage = ({ data: { fugitive } }) => {
                   <div>
                     Possible States:{" "}
                     {fugitive.possible_states.map((state, index) => {
-                      return <span key={index}>{state}</span>
+                      return (
+                        <span className={styles.listSpan} key={index}>
+                          {state}
+                        </span>
+                      )
                     })}
                   </div>
                 )}
@@ -229,21 +262,12 @@ export const fugitiveQuery = graphql`
       description
       warning_message
       occupations
-      suspects
       remarks
       images {
         caption
         original
-        thumb
-        large
       }
       field_offices
-      coordinates {
-        formatted
-        lng
-        lat
-      }
-      additional_information
       place_of_birth
       locations
       languages
@@ -254,12 +278,10 @@ export const fugitiveQuery = graphql`
       sex
       subjects
       race
-      person_classification
       nationality
       hair
       eyes
       aliases
-      age_min
       publication
       possible_states
       possible_countries

@@ -2,13 +2,13 @@
   width: 50%;
   margin: auto;
   display: flex;
+  margin-top: 20px;
 }
 
 .fugitiveGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 5px;
-  padding: 10px 0;
 }
 
 .fugitiveCard {

@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
                 <Tooltip
                   className={styles.syncTooltip}
                   intent="primary"
-                  content="Search results are synced with the FBI Wanted database twice a day."
+                  content="Data is synced periodically with the FBI Wanted database."
                 >
                   <Icon
                     icon="info-sign"
