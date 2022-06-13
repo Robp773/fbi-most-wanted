@@ -11,7 +11,6 @@ const capitalizeWords = (str, desc) => {
   if (desc) {
    newStr = newStr.concat(` ${desc}`)
   }
-  console.log(newStr, desc)
   return newStr
 }
 

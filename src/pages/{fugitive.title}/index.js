@@ -1,36 +1,18 @@
-import React, { useState } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import Seo from "../../components/seo"
 import * as styles from "../../styles/pages/fugitive.module.css"
 import ImageGallery from "react-image-gallery"
 import Layout from "../../components/layout"
-import { Callout, Divider, Collapse, Pre, Button } from "@blueprintjs/core"
+import { Callout, Button } from "@blueprintjs/core"
 import FugitiveTag from "../../components/FugitiveTag"
 import { capitalizeWords } from "../../helpers/local-search-helpers"
 import { Link } from "gatsby"
 
-const images = [
-  {
-    original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1019/1000/600/",
-    thumbnail: "https://picsum.photos/id/1019/250/150/",
-  },
-]
 const FugitivePage = ({ data: { fugitive } }) => {
-  console.log(fugitive)
-
-  const [isInfoOpen, setInfoOpen] = useState(true)
-
   return (
     <Layout>
-      <div className={styles.fugitivePage}>
+      <div>
         <Seo title="Fugitive page" />
         <div className={styles.fugitiveContent}>
           <Link className={styles.backLink} to="/">
@@ -110,7 +92,7 @@ const FugitivePage = ({ data: { fugitive } }) => {
             </div>
           </div>
 
-          <div className={styles.fugitiveInfo}>
+          <div>
             {fugitive.remarks && (
               <div className={styles.fugitiveSection}>
                 <h5 className="bp4-heading">Remarks</h5>
@@ -123,7 +105,7 @@ const FugitivePage = ({ data: { fugitive } }) => {
             {fugitive.description && (
               <div className={styles.fugitiveSection}>
                 <h5 className="bp4-heading">Description Info</h5>
-                <ul className={`${styles.descList} bp4-list bp4-list-unstyled`}>
+                <ul className="bp4-list bp4-list-unstyled">
                   {fugitive.description.split(";").map((item, index) => {
                     return <li key={index}>{item}</li>
                   })}

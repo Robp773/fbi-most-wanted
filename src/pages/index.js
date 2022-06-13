@@ -30,7 +30,6 @@ const IndexPage = data => {
     localSearchFugitives.index,
     localSearchFugitives.store
   )
-  console.log(results)
   return (
     <Layout>
       <Seo title="Most Wanted List" />

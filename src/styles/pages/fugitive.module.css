@@ -10,15 +10,12 @@
 .fugitiveHeading {
   display: flex;
   min-height: 300px;
-  /* justify-content: center; */
   align-items: center;
   margin-bottom: 10px;
 }
 
 .headingContent {
   width: 60%;
-  /* margin: 0 auto; */
-  text-align: center;
 }
 
 .headingGallery {
@@ -31,17 +28,7 @@
 .fugitiveTagWrapper {
   display: flex;
   justify-content: flex-start;
-  /* background-color: red; */
   flex-wrap: wrap;
-}
-.fugitiveInfo {
-}
-
-.fugitiveAdditionalInfo {
-}
-
-.title {
-  /* text-align: center; */
 }
 
 .reward,
@@ -64,4 +51,8 @@
 
 .listSpan {
   margin-right: 5px;
+}
+
+.title {
+  text-align: center;
 }
